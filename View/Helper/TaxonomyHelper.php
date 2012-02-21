@@ -21,6 +21,7 @@ class TaxonomyHelper extends AppHelper{
 
 		$options['id'] = $type;
 		$options['class'] = 'addTaxo';
+		$options['value'] = ''; 
 		return $this->Form->input('Taxonomy.'.$type,$options).$html; 
 	}
 
