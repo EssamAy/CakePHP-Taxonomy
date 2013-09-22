@@ -2,7 +2,7 @@
 class TaxonomyBehavior extends ModelBehavior{
 
 
-	public function setup($model,$options = array()){
+	public function setup(Model $model,$config = array()){
 		$model->hasAndBelongsToMany['Term'] = array(
 			'className'  => 'Taxonomy.Term',
 			'associationForeignKey' => 'term_id',
@@ -13,7 +13,7 @@ class TaxonomyBehavior extends ModelBehavior{
 		);
 	}
 
-	public function afterSave($model){
+	public function afterSave(Model $model, $created, $options = array()){
 		if(isset($model->data[$model->name]['terms'])){
 			$model->deleteTerms(array_keys($model->data[$model->name]['terms'])); 
 			foreach($model->data[$model->name]['terms'] as $terms){
@@ -31,14 +31,14 @@ class TaxonomyBehavior extends ModelBehavior{
 		}
 	}
 
-	public function afterFind($model,$data){
-		foreach($data as $k=>$v){
+	public function afterFind(Model $model, $results, $primary = false){
+		foreach($results as $k=>$v){
 			if(!empty($v['Term'])){
-				$data[$k][$model->name]['terms'] = Set::Combine($v['Term'],'{n}.id','{n}.id','{n}.type');
-				$data[$k]['Taxonomy'] = Set::Combine($v['Term'],'{n}.id','{n}','{n}.type');
+				$results[$k][$model->name]['terms'] = Set::Combine($v['Term'],'{n}.id','{n}.id','{n}.type');
+				$results[$k]['Taxonomy'] = Set::Combine($v['Term'],'{n}.id','{n}','{n}.type');
 			}
 		}
-		return $data;
+		return $results;
 	}
 
 	/**
