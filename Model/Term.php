@@ -9,13 +9,13 @@ class Term extends AppModel{
 	public $displayField = 'name';
 
 
-	public function afterFind($data){
-		foreach($data as $k=>$v){
+	public function afterFind($results, $primary = false){
+		foreach($results as $k=>$v){
 			if(isset($v['Term']['name_'.Configure::read('Config.language')])){
-				$data[$k]['Term']['name'] = $v['Term']['name_'.Configure::read('Config.language')];
+				$results[$k]['Term']['name'] = $v['Term']['name_'.Configure::read('Config.language')];
 			}
 		}
-		return $data; 
+		return $results; 
 	}
 
 }
