@@ -49,7 +49,7 @@ The Helper
 The Taxonomy helper allow you to create a quick and easy Taxonomy system
 Firstly you have to load the Helper
 
-	public $helper = array('Html','Form','Taxonomy.Taxonomy');
+	public $helpers = array('Html','Form','Taxonomy.Taxonomy');
 
 To create a quick and easy tag manager use
 	
